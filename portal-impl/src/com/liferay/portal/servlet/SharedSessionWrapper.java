@@ -184,6 +184,14 @@ public class SharedSessionWrapper implements HttpSession {
 		HttpSession session = getSessionDelegate(name);
 
 		session.setAttribute(name, value);
+		 
+		// @Sushil Saini
+		// Added this code to make the shared session variables
+		// available to http servlet session
+		if (containsSharedAttribute(name)) {
+			HttpSession httpSession = getSessionDelegate();
+			httpSession.setAttribute(name, value);
+		}
 	}
 
 	public void setMaxInactiveInterval(int maxInactiveInterval) {
